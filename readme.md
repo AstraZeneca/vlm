@@ -1,1 +1,1 @@
-vlm root
+lavender project page root
