@@ -1,0 +1,54 @@
+body {
+    font-family: 'Noto Sans', sans-serif;
+  }
+  
+  /* Adjust heading fonts (optional) */
+  .title, .subtitle {
+    font-family: 'Google Sans', sans-serif;
+  }
+  
+  /* Shared link styling */
+  .link-block a {
+      margin: 0.4rem 0.6rem;
+      text-decoration: none;
+  }
+  
+  /* Hero: add more vertical spacing if needed */
+  .hero-body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  /* For the "publication-title" classes (header design) */
+  .publication-title {
+    letter-spacing: -0.5px;
+  }
+  
+  .publication-awards {
+    color: #ff3860;
+    font-weight: bold;
+  }
+  
+  /* Teaser styling */
+  .teaser .hero-body {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  /* Card styling (for VQA example expansions) */
+  .card {
+    margin-bottom: 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  
+  .card .card-body {
+    padding: 1rem;
+  }
+  
+  .card img {
+    border-radius: 4px;
+  }
+  
+  /* Custom expansions / placeholders for your style */
+  

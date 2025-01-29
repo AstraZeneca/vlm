@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Diffusion Instruction Tuning (Lavender)">
+  <meta name="keywords" content="multimodal, vision-language, diffusion, instruction tuning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lavender: Diffusion Instruction Tuning</title>
+
+  <!-- Bulma, Bootstrap, FontAwesome, etc. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/5886/5886212.png">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- jQuery, FontAwesome JS, etc. -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+</head>
+
+<body>
+  <!-- ===== Hero / Title Section ===== -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-2 publication-title" style="color: #5b4eadd7;">
+                Lavender: Diffusion Instruction Tuning
+            </h1>              
+            <h3 class="subtitle is-4 publication-title" style="margin-bottom: 1rem;">
+              <em>Bridging Text-to-Image (T2I) and Image-to-Text (I2T) Models</em>
+            </h3>
+            <h5 class="subtitle is-5 publication-awards">
+              <strong>Preprint available on arXiv</strong>
+            </h5>
+
+            <!-- Authors / Affiliations -->
+            <div class="is-size-6 publication-authors" style="margin-top: 1rem;">
+              <span class="author-block">
+                <a href="https://chenjin.netlify.app/" style="color:#008AD7;font-weight:normal;">Chen Jin<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://rt416.github.io/" style="color:#008AD7;font-weight:normal;">Ryutaro Tanno<sup>2</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://uk.linkedin.com/in/amrutha-saseendran" style="color:#008AD7;font-weight:normal;">Amrutha Saseendran<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://tomdiethe.com/" style="color:#008AD7;font-weight:normal;">Tom Diethe<sup>1</sup></a>,
+              </span>
+              <span class="author-block">
+                <a href="https://uk.linkedin.com/in/philteare" style="color:#008AD7;font-weight:normal;">Philip Teare<sup>1</sup></a>
+              </span>
+            </div>
+            
+            <h5 class="subtitle is-5 publication-awards"></h5>
+            <span style="font-size: 20px"><sup>1</sup>AstraZeneca &nbsp;&nbsp;<sup>2</sup>Google DeepMind
+            </h5>
+
+            <!-- Additional links (arXiv, PDF, Code, etc.) -->
+            <div class="columns is-centered">
+              <div class="column has-text-centered">
+                <div class="publication-links" style="margin-top: 2rem;">
+                  <span class="link-block">
+                    <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="ai ai-arxiv"></i></span>
+                      <span>arXiv</span>
+                    </a>
+                  </span>
+                  <!-- <span class="link-block">
+                    <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fab fa-github"></i></span>
+                      <span>Code</span>
+                    </a>
+                  </span> -->       
+                  <span class="link-block">
+                    <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon"><i class="fas fa-play"></i></span>
+                      <span>Demo</span>
+                    </a>
+                  </span>
+                  <!-- <span class="link-block">
+                    <a class="button is-normal is-rounded is-dark" style="opacity: 0.6; cursor: not-allowed;">
+                      <span class="icon"><i class="fas fa-brain"></i></span>
+                      <span>Model (Coming Soon)</span>
+                    </a>
+                  </span>             -->
+                  <span class="link-block">
+                    <a class="button is-normal is-rounded is-dark" style="opacity: 0.6; cursor: not-allowed;">
+                      <span class="icon"><i class="fas fa-database"></i></span>
+                      <span>Model & Dataset (Coming Soon)</span>
+                    </a>
+                  </span> 
+                </div>
+              </div>
+            </div>
+
+            <!-- Potential short teaser/highlight -->
+            <div class="content" style="max-width: 950px; margin: 0 auto;">
+              <p>
+                <strong>Lavender</strong> (<strong>L</strong>anguage-<strong>a</strong>nd-<strong>V</strong>ision fin<strong>e</strong>-tu<strong>n</strong>ing with <strong>D</strong>iffusion Align<strong>er</strong>) is a framework for improving vision-language models (VLMs) by aligning them
+                with Stable Diffusion’s cross-attention. Our results show better text-region alignment, enhanced
+                zero-shot capabilities, and improved out-of-distribution performance—all using far fewer data
+                and compute than typical large-scale VLM training.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Teaser / Banner Section ===== -->
+  <section class="hero teaser" style="background-color:#efeff081;">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <!-- Title and tagline, remains centered -->
+        <h4 class="subtitle has-text-centered" style="font-size:1.1rem;">
+          <strong>Diffusion Instruction Tuning</strong> <br />
+          <em>“SoTA T2I attention in Stable Diffusion can be transferred to enhance I2T generation in SoTA VLMs.”</em>
+          <br><br>
+        </h4>
+        <!-- Centered Abstract Container with fixed max width -->
+        <div class="abstract-summary" style="max-width: 1920px; margin: 0 auto; text-align: center;">
+          <!-- <h2>Abstract</h2> -->
+          <p>
+            Lavender is an extension of visual instruction tuning that aligns cross-attention in Stable Diffusion with per-token attention in VLMs, using a regularisation loss (specifically, mean squared error or MSE). 
+          </p>
+          <p>
+            <strong>Key highlights:</strong>
+          </p>
+  
+          <!-- Bullet points also centered -->
+          <ul style="list-style-position: inside;">
+            <li><strong>Precise Attention:</strong> Leverage T2I’s fine-grained word-to-region mapping.</li>
+            <li><strong>Robust Gains:</strong> Up to 30% improvement with Llama-3.2 across 20 tasks; +68% on OOD tasks.</li>
+            <li><strong>Model-Agnostic:</strong> Works with SoTA VLMs (Llama-3.2, MiniCPMv2.5, OpenFlamingo, etc.)</li>
+            <li><strong>Data-Efficient:</strong> Only ~0.13M samples needed (2.5% of large VLM finetuning data).</li>
+          </ul>
+  
+          <!-- Expand/Collapse Toggle Button -->
+          <button onclick="toggleAbstract()" style="margin-top:10px;">
+            Read Full Abstract
+          </button>
+  
+          <!-- Hidden Full Abstract -->
+          <div id="full-abstract" style="display: none; margin-top:10px;">
+            <p>
+              We introduce Lavender, an extension of visual instruction tuning that leverages high-quality cross-attention
+              learned by text-to-image (T2I) diffusion models to improve image-to-text (I2T) generation.
+              We find that T2I models, which reconstruct images at the pixel level, learn more precise attention maps that
+              capture fine-granularity spatial saliency than I2T models optimized solely for text tokens.
+              <br><br>
+              Lavender bridges this overlooked gap by directly aligning the per-word attention in I2T transformers with T2I’s
+              clear word-to-region saliency via a mean squared error loss. This alignment is added on top of the standard 
+              next-token prediction loss and implemented as a model-agnostic module using Stable Diffusion. While prior work 
+              aligns I2T models at the image encoder or adaptor layers, <em>Lavender is the first to directly align per-word 
+              attention within the LLM transformer</em>.
+              <br><br>
+              Experiments on multiple pretrained vision-language models (VLMs)—including Llama-3.2-11B, MiniCPM-Llama3-v2.5-8B, 
+              and OpenFlamingo-3B—show that Lavender generalizes well across in- and out-of-distribution (OOD) data, reducing 
+              OOD performance degradation and achieving up to 30% gains across 20 benchmarks, including question answering 
+              and captioning. Lavender also improves performance by 68% on the severely OOD WorldMedQA benchmark, highlighting 
+              its robustness to domain gaps in multilingual medical questions.
+              <br><br>
+              Notably, it requires as few as 0.13M training samples (about 2.5% of typical large VLM datasets). By transferring 
+              “visual expertise” from T2I to I2T without requiring additional annotations, Lavender tackles data scarcity and 
+              paves the way for more unified vision-language systems across diverse applications.
+            </p>
+            <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">See Full Paper on ArXiv</a>
+          </div>
+        </div><!-- end of abstract-summary -->
+      </div><!-- end of hero-body -->
+    </div><!-- end of container -->
+  </section>
+  
+  <script>
+    function toggleAbstract() {
+      const fullAbs = document.getElementById('full-abstract');
+      if (fullAbs.style.display === 'none') {
+        fullAbs.style.display = 'block';
+      } else {
+        fullAbs.style.display = 'none';
+      }
+    }
+  </script>
+  
+
+
+  
+  
+  <script>
+    function toggleAbstract() {
+      const fullAbs = document.getElementById('full-abstract');
+      if (fullAbs.style.display === 'none') {
+        fullAbs.style.display = 'block';
+      } else {
+        fullAbs.style.display = 'none';
+      }
+    }
+  </script>
+  
+  
+
+  <!-- ===== Figures / Key Insights Section ===== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-six-fifths">
+          <h2 class="title is-3">Key Insights and Figures</h2>
+        </div>
+      </div>
+
+      <!-- Row of figures -->
+      <div class="columns is-centered">
+        <div class="column is-full-width">
+          <div class="content has-text-justified">
+
+              <div style="
+              display: flex; 
+              flex-wrap: wrap; 
+              justify-content: center; 
+              align-items: center; 
+              gap: 20px;">
+
+              <!-- First Figure -->
+              <figure style="
+                flex: 1 1 600px; 
+                max-width: 100%; 
+                min-width: 250px; 
+                margin: 0; 
+                text-align: center;">
+                <img src="static/images/grouped_relative_improvement_wide.png" 
+                     alt="Lavender Gains" 
+                     style="width: 100%; vertical-align: middle;">
+                <figcaption>
+                  <small>
+                    <em>Average Performance on 20 Benchmarks (Grouped into 4 Categories).</em>
+                  </small>
+                </figcaption>
+              </figure>
+              
+              
+            </div>
+            
+
+            <div style="
+              display: flex; 
+              flex-wrap: wrap; 
+              justify-content: center; 
+              align-items: center; 
+              gap: 20px;">
+              
+              <!-- First Figure -->
+              <figure style="
+                flex: 1 1 600px; 
+                max-width: 80%; 
+                min-width: 250px; 
+                margin: 0; 
+                text-align: center;">
+                <img src="static/images/motivation_xattn_v2.jpg" 
+                     alt="Lavender Gains" 
+                     style="width: 100%; vertical-align: middle;">
+                <figcaption>
+                  <small>
+                    <em>Empirical results show that diffusion models exhibit stronger word-to-region alignment than VLMs.</em>
+                  </small>
+                </figcaption>
+              </figure>
+            
+              <!-- Second Figure -->
+              <figure style="
+                flex: 1 1 600px; 
+                max-width: 80%; 
+                min-width: 250px; 
+                margin: 0; 
+                text-align: center;">
+                <img src="static/images/method_highlight_v22_bw.jpg" 
+                     alt="Lavender Gains" 
+                     style="width: 100%; vertical-align: middle;">
+                <figcaption>
+                  <small>
+                    <em>High-level method: We add an alignment loss to ensure VLM attention matches stable diffusion cross-attention, bridging T2I and I2T alignment.</em>
+                  </small>
+                </figcaption>
+              </figure>
+            </div>
+            
+     
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ===== Additional / Detailed Methods Section ===== -->
+  <section class="section" id="method" style="background-color:#efeff081">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">Method</h2>
+
+      <p>
+        Lavender is built on the simple idea of harnessing text-to-image (T2I) diffusion models for 
+        image-to-text (I2T) generation tasks. We hypothesize that the cross-attention in T2I models 
+        is more fine-grained for spatial alignment, while the VLM’s objective is purely next-token 
+        prediction, leading to weaker text-region alignment. By adding a mean-squared error (MSE) loss 
+        between the VLM and diffusion cross-attention on the same data, we shift the VLM attention distribution 
+        closer to an ideal alignment.
+      </p>
+
+      <!-- Code snippet or pseudo-code from your LaTeX -->
+      <div class="card mb-3">
+        <div class="card-body" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+          <div style="flex:1; min-width:300px; margin-right:1rem;">
+            <img src="static/images/lavender_fig_3.jpg" alt="fig 3" style="max-width:100%;">
+          </div>
+        </div>
+      </div>
+
+      <p>
+        We propose an <strong>Aligner Network</strong> (a few light convolution layers) to transform 
+        the raw VLM attention into a distribution that can be directly matched to the stable diffusion 
+        attention. When used with parameter-efficient finetuning (LoRA), we see strong results 
+        without destabilizing the original VLM’s capabilities.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===== Performance / Benchmark Section ===== -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-six-fifths">
+          <h2 class="title is-3">Performance Across Benchmarks</h2>
+        </div>
+      </div>
+
+      <div class="content has-text-justified">
+        <p>
+          We evaluate Lavender on 16 mainstream vision-language benchmarks, covering chart/diagram/document 
+          understanding, perception and multi-discipline reasoning, real-world visual tasks, and 
+          visual hallucination detection. The figure below shows a typical relative improvement pattern 
+          for <em>Lavender Llama-3.2</em>, where we see up to 50% gains over Small Budget-Constrained SOTA.
+        </p>
+      </div>
+
+        <!-- First Figure -->
+          <figure style="
+          flex: 1 1 600px; 
+          max-width: 100%; 
+          min-width: 250px; 
+          margin: 0; 
+          text-align: center;">
+          <img src="static/images/lm32_relative_improvement_with_offsets_20_benchmarks_op.png" 
+              alt="Lavender Gains" 
+              style="width: 100%; vertical-align: middle;">
+          <figcaption>
+            <small>
+              <em>Lavender boosts the cross-attention-equipped Llama-3.2-11B by up to 30% on 19/20 benchmarks.</em>
+            </small>
+          </figcaption>
+        </figure>
+      
+        <!-- Second Figure -->
+        <figure style="
+          flex: 1 1 600px; 
+          max-width: 100%; 
+          min-width: 250px; 
+          margin: 0; 
+          text-align: center;">
+          <img src="static/images/minicpm_relative_improvement_side_by_side_op.png" 
+              alt="Lavender Gains" 
+              style="width: 100%; vertical-align: middle;">
+          <figcaption>
+            <small>
+              <em>Lavender enhances the self-attention-only MiniCPM-Llama3-V-2.5 by up to 4% on 16/20 benchmarks.</em>
+            </small>
+          </figcaption>
+        </figure>
+
+        <figure style="text-align: center;">
+            <img src="static/images/plot_relative_improvement_over_sota_full.png" alt="Lavender Gains" style="max-width: 100%;">
+            <figcaption>
+                <small>
+                <em>Lavender improves MiniCPM-V-2.5 and Llama-3.2-11B, surpassing Small Budget-Constrained SOTA by up to 50% with minimal finetuning data (~0.13M).</em>
+                </small>
+            </figcaption>
+            </figure>
+
+      <div class="content has-text-justified">
+        <p>
+          Among <em>Large SOTA Models</em>, Lavender demonstrates comparable performance to 
+          certain closed-source models at least an order of magnitude larger 
+          (e.g., <em>Claude-3.5 Sonnet, GPT-4o, and Gemini 1.5 Pro</em>) on certain tasks.
+        </p>
+      </div>
+
+        <figure style="text-align: center;">
+            <img src="static/images/bar_highlight.png" alt="Lavender Gains" style="max-width: 100%;">
+            <figcaption>
+                <small>
+                <em>Lavender-Llama-3.2-11B demonstrates comparable performance to certain High-Resource State-of-the-Art Models.</em>
+                </small>
+            </figcaption>
+            </figure>
+
+      <div class="content has-text-justified">
+        <p>
+          We observe that aligning attention with diffusion models also helps reduce visual
+          hallucinations, especially on tasks that require domain-specific knowledge. 
+          With minimal data (<strong>0.13M</strong> samples),
+          we boost performance significantly on out-of-distribution tasks like 
+          <em>WorldMedQA</em>, improving by <strong>68%</strong> relative to standard fine-tuning.
+        </p>
+      </div>
+
+        <figure style="text-align: center;">
+            <img src="static/images/bar_wordmedqa_with_annotations.png" alt="Lavender Gains" style="max-width: 100%;">
+            <figcaption>
+                <small>
+                <em>Without tuning on medical dataset, Lavender boosts Llama-3.2-11B's performance on the out-of-distribution benchmark WorldMedQA by 68%.</em>
+                </small>
+            </figcaption>
+            </figure>
+
+    </div>
+  </section>
+
+
+  <!-- ===== Example Qualitative / Visual Demo Section (optional) ===== -->
+  <section class="section" style="background-color:#efeff081">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Qualitative Examples</h2>
+      <div class="columns is-centered">
+        <div class="column is-full">
+          <p class="has-text-centered" style="margin-bottom:2rem;">
+            Below are some sample VQA questions comparing <strong>original Llama-3.2-11B</strong> and 
+            <strong>Lavender-Llama-3.2-11B</strong>:
+          </p>
+          
+          <!-- Example 1 -->
+          <div class="card mb-3">
+            <div class="card-body" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;">
+              <div style="flex:1; min-width:300px; margin-right:1rem;">
+                <img src="static/images/lavender_visual_highlight.jpg" alt="Example VQA 1" style="max-width:100%;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== BibTeX Section ===== -->
+  <section class="section" id="bibtex">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">BibTeX</h2>
+      <pre><code>
+@inproceedings{jin2024diffusioninstr,
+  title={Diffusion Instruction Tuning},
+  author={Chen Jin and Ryutaro Tanno and ...},
+  booktitle={ICML},
+  year={2024}
+}
+      </code></pre>
+    </div>
+  </section>
+
+
+  <!-- ===== Acknowledgement Section ===== -->
+  <section class="section" id="ack">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">Acknowledgements</h2>
+      <p>
+        We thank the creators of <a href="https://github.com/CompVis/stable-diffusion" target="_blank">Stable Diffusion</a> and 
+        related open-source diffusion projects for providing the foundation of cross-attention alignment used in Lavender.
+        We also appreciate the open-source community around <em>LLMs</em>, <em>VLMs</em>, and <em>PEFT</em> frameworks which 
+        made this project feasible under constrained data and compute resources.
+      </p>
+      <p>
+        Usage and License Notices: Our data and code are for research use only. 
+        They are also restricted by the licenses of 
+        <em>Llama, Stable Diffusion, and other upstream models</em>. 
+        See our GitHub repository for license details.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Footer Section (Optional) ===== -->
+  <footer class="footer has-text-centered" style="padding:2rem 1.5rem;">
+    <div class="content">
+      <p>
+        <strong>Lavender</strong> by <a href="https://chenjin.netlify.app/" target="_blank">Chen Jin</a> @ <a href="https://github.com/AstraZeneca" target="_blank">
+            Centre for AI, Data Science & Artificial Intelligence, BioPharmaceuticals R&D, AstraZeneca, Cambridge, UK</a>.
+        </p>
+        <p>
+        Built upon open-source code from the broader academic community.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
