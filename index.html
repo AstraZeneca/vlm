@@ -23,6 +23,10 @@
   <!-- jQuery, FontAwesome JS, etc. -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"></script>
+  <script type="text/javascript" async
+    src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script type="text/javascript" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
 <body>
@@ -36,7 +40,7 @@
                 Lavender: Diffusion Instruction Tuning
             </h1>              
             <h3 class="subtitle is-4 publication-title" style="margin-bottom: 1rem;">
-              <em>Bridging Text-to-Image (T2I) and Image-to-Text (I2T) Models</em>
+              <em>Boosting SoTA vision-language model with Stable Diffusion</em>
             </h3>
             <h5 class="subtitle is-5 publication-awards">
               <strong>Preprint available on arXiv</strong>
@@ -106,10 +110,7 @@
             <!-- Potential short teaser/highlight -->
             <div class="content" style="max-width: 950px; margin: 0 auto;">
               <p>
-                <strong>Lavender</strong> (<strong>L</strong>anguage-<strong>a</strong>nd-<strong>V</strong>ision fin<strong>e</strong>-tu<strong>n</strong>ing with <strong>D</strong>iffusion Align<strong>er</strong>) is a framework for improving vision-language models (VLMs) by aligning them
-                with Stable Diffusion’s cross-attention. Our results show better text-region alignment, enhanced
-                zero-shot capabilities, and improved out-of-distribution performance—all using far fewer data
-                and compute than typical large-scale VLM training.
+                <strong>Lavender</strong> (<strong>L</strong>anguage-<strong>a</strong>nd-<strong>V</strong>ision fin<strong>e</strong>-tu<strong>n</strong>ing with <strong>D</strong>iffusion Align<strong>er</strong>) is a simple supervised fine-tuning (SFT) method that boosts the performance of advanced vision-language models (VLMs) by leveraging state-of-the-art image generation models such as Stable Diffusion. 
               </p>
             </div>
 
@@ -126,14 +127,13 @@
         <!-- Title and tagline, remains centered -->
         <h4 class="subtitle has-text-centered" style="font-size:1.1rem;">
           <strong>Diffusion Instruction Tuning</strong> <br />
-          <em>“SoTA T2I attention in Stable Diffusion can be transferred to enhance I2T generation in SoTA VLMs.”</em>
-          <br><br>
+          <em>“The visual expertise of image generators in Stable Diffusion can be transferred to enhance text generation in SoTA VLMs.”</em>
         </h4>
         <!-- Centered Abstract Container with fixed max width -->
         <div class="abstract-summary" style="max-width: 1920px; margin: 0 auto; text-align: center;">
           <!-- <h2>Abstract</h2> -->
           <p>
-            Lavender is an extension of visual instruction tuning that aligns cross-attention in Stable Diffusion with per-token attention in VLMs, using a regularisation loss (specifically, mean squared error or MSE). 
+            Lavender aligns the text-vision attention in the VLM transformer with the equivalent used by Stable Diffusion during SFT, instead of adapting separate encoders. This alignment enriches the model’s visual understanding and significantly boosts performance across in- and out-of-distribution tasks.
           </p>
           <p>
             <strong>Key highlights:</strong>
@@ -141,40 +141,27 @@
   
           <!-- Bullet points also centered -->
           <ul style="list-style-position: inside;">
-            <li><strong>Precise Attention:</strong> Leverage T2I’s fine-grained word-to-region mapping.</li>
-            <li><strong>Robust Gains:</strong> Up to 30% improvement with Llama-3.2 across 20 tasks; +68% on OOD tasks.</li>
-            <li><strong>Model-Agnostic:</strong> Works with SoTA VLMs (Llama-3.2, MiniCPMv2.5, OpenFlamingo, etc.)</li>
-            <li><strong>Data-Efficient:</strong> Only ~0.13M samples needed (2.5% of large VLM finetuning data).</li>
+            <li><strong>Significant Gains:</strong> +30% on 20 tasks, +68% on OOD WorldMedQA.</li>
+            <li><strong>Data-Efficient:</strong> Needs only 0.13M samples (~2.5% of typical VLM datasets).</li>
+            <li><strong>Low Compute:</strong> Finetunes in ~1 day on 8 NVIDIA A10G GPUs.</li>
+            <li><strong>Model-Agnostic:</strong> Works with Llama-3.2-11B, MiniCPM-Llama3-v2.5 & more.</li>
+            <li><strong>Precise Alignment:</strong> Transfers strong text-vision alignment from Stable Diffusion.</li>
+            <li><strong>Open-Source:</strong> Code, data & finetuned models will be available.</li>
           </ul>
   
           <!-- Expand/Collapse Toggle Button -->
           <button onclick="toggleAbstract()" style="margin-top:10px;">
-            Read Full Abstract
+            Read Introduction
           </button>
   
           <!-- Hidden Full Abstract -->
           <div id="full-abstract" style="display: none; margin-top:10px;">
             <p>
-              We introduce Lavender, an extension of visual instruction tuning that leverages high-quality cross-attention
-              learned by text-to-image (T2I) diffusion models to improve image-to-text (I2T) generation.
-              We find that T2I models, which reconstruct images at the pixel level, learn more precise attention maps that
-              capture fine-granularity spatial saliency than I2T models optimized solely for text tokens.
+              Training frontier foundation models from scratch costs millions of dollars at minimum, requiring hundreds of GPUs and millions to billions of data. This challenge is even more pronounced in multimodal settings: vision-language models (VLMs) often face data scarcity because collecting paired image-text datasets is expensive. A common workaround is to apply supervised fine-tuning (SFT) on a pretrained large language model (LLM), leveraging its abundant text-only pretraining and adjusting bridging layers or additional encoders with limited image-text pairs. However, these methods typically overlook the importance of transformer-level attention alignment within the LLM core---a key component for effectively expanding text-based models into the visual domain.
               <br><br>
-              Lavender bridges this overlooked gap by directly aligning the per-word attention in I2T transformers with T2I’s
-              clear word-to-region saliency via a mean squared error loss. This alignment is added on top of the standard 
-              next-token prediction loss and implemented as a model-agnostic module using Stable Diffusion. While prior work 
-              aligns I2T models at the image encoder or adaptor layers, <em>Lavender is the first to directly align per-word 
-              attention within the LLM transformer</em>.
+              Precise visual-text alignment is crucial for advanced multimodal reasoning. While both VLMs and diffusion models (DMs) process text and images, they diverge in their generation objectives. We observe that DMs, such as Stable Diffusion, which reconstructs images at the pixel level, appear to learn more precise text-vision attention maps than VLMs that are optimised solely for text token generation (Figure 2).
               <br><br>
-              Experiments on multiple pretrained vision-language models (VLMs)—including Llama-3.2-11B, MiniCPM-Llama3-v2.5-8B, 
-              and OpenFlamingo-3B—show that Lavender generalizes well across in- and out-of-distribution (OOD) data, reducing 
-              OOD performance degradation and achieving up to 30% gains across 20 benchmarks, including question answering 
-              and captioning. Lavender also improves performance by 68% on the severely OOD WorldMedQA benchmark, highlighting 
-              its robustness to domain gaps in multilingual medical questions.
-              <br><br>
-              Notably, it requires as few as 0.13M training samples (about 2.5% of typical large VLM datasets). By transferring 
-              “visual expertise” from T2I to I2T without requiring additional annotations, Lavender tackles data scarcity and 
-              paves the way for more unified vision-language systems across diverse applications.
+              In this work, we demonstrate that the high-quality cross-attention maps from these DMs indeed offer a useful target for guiding the text-vision attention in VLMs during SFT, thus improving word-to-region alignment and the overall performance. We introduce <strong>Lavender</strong> (<strong>L</strong>anguage-<strong>a</strong>nd-<strong>V</strong>ision fin<strong>e</strong>-tu<strong>n</strong>ing with <strong>D</strong>iffusion Align<strong>er</strong>), the first framework to directly align VLM transformer attention layers with those of Stable Diffusion (Figure 3). Specifically, during SFT, Lavender transfers diffusion-based attention distributions to VLMs, enhancing core visual-textual interactions. To mitigate catastrophic forgetting, we additionally propose several attention aggregation methods and training strategies that preserve existing VLM competencies.
             </p>
             <a href="https://arxiv.org/abs/XXXX.XXXXX" target="_blank">See Full Paper on ArXiv</a>
           </div>
@@ -244,7 +231,7 @@
                      style="width: 100%; vertical-align: middle;">
                 <figcaption>
                   <small>
-                    <em>Average Performance on 20 Benchmarks (Grouped into 4 Categories).</em>
+                    <em>Figure 1. Average Performance on 20 Vision-Language Reasoning Benchmarks (Grouped into 4 Categories).</em>
                   </small>
                 </figcaption>
               </figure>
@@ -272,7 +259,7 @@
                      style="width: 100%; vertical-align: middle;">
                 <figcaption>
                   <small>
-                    <em>Empirical results show that diffusion models exhibit stronger word-to-region alignment than VLMs.</em>
+                    <em>Figure 2. Image generation models (Stable Diffusion on the left) exhibit stronger word-to-region attention alignment than VLMs (Open-Flamingo on the right). Per-word average attention maps suggest that diffusion models may be closer to an ideal distribution correlating image regions with textual tokens.</em>
                   </small>
                 </figcaption>
               </figure>
@@ -284,12 +271,13 @@
                 min-width: 250px; 
                 margin: 0; 
                 text-align: center;">
-                <img src="static/images/method_highlight_v22_bw.jpg" 
+                <img src="static/images/method_highlight_v33.jpg" 
                      alt="Lavender Gains" 
                      style="width: 100%; vertical-align: middle;">
                 <figcaption>
                   <small>
-                    <em>High-level method: We add an alignment loss to ensure VLM attention matches stable diffusion cross-attention, bridging T2I and I2T alignment.</em>
+                    <em><strong>Lavender: Diffusion Instruction Tuning.</strong>
+                      Lavender uses the text-vision attention maps of a Stable Diffusion Model, \(Attention_{SDM}\), as a guiding objective for the attention of the target vision-language model (VLM), \(Attention_{VLM}\). The \textit{Attention Alignment} module employs a 3-Layer ConvNet to transform \(Attention_{VLM}\) to match \(Attention_{SDM}\) via an MSE loss, acting as a regularisation term during supervised fine-tuning.</em>
                   </small>
                 </figcaption>
               </figure>
@@ -323,14 +311,14 @@
       <div class="card mb-3">
         <div class="card-body" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;">
           <div style="flex:1; min-width:300px; margin-right:1rem;">
-            <img src="static/images/lavender_fig_3.jpg" alt="fig 3" style="max-width:100%;">
+            <img src="static/images/lavender_fig_4.jpg" alt="fig 3" style="max-width:100%;">
           </div>
         </div>
       </div>
 
       <p>
         We propose an <strong>Aligner Network</strong> (a few light convolution layers) to transform 
-        the raw VLM attention into a distribution that can be directly matched to the stable diffusion 
+        the raw VLM attention into a distribution that can be directly matched to the Stable Diffusion 
         attention. When used with parameter-efficient finetuning (LoRA), we see strong results 
         without destabilizing the original VLM’s capabilities.
       </p>
@@ -363,12 +351,12 @@
           min-width: 250px; 
           margin: 0; 
           text-align: center;">
-          <img src="static/images/lm32_relative_improvement_with_offsets_20_benchmarks_op.png" 
+          <img src="static/images/lm32_relative_improvement_with_offsets_20_benchmarks_v3_lora.png" 
               alt="Lavender Gains" 
               style="width: 100%; vertical-align: middle;">
           <figcaption>
             <small>
-              <em>Lavender boosts the cross-attention-equipped Llama-3.2-11B by up to 30% on 19/20 benchmarks.</em>
+              <em>Lavender boosts the cross-attention-equipped Llama-3.2-11B by up to 30% on 19/20 benchmarks, while mitigating catastrophic forgetting.</em>
             </small>
           </figcaption>
         </figure>
@@ -380,12 +368,12 @@
           min-width: 250px; 
           margin: 0; 
           text-align: center;">
-          <img src="static/images/minicpm_relative_improvement_side_by_side_op.png" 
+          <img src="static/images/minicpm_relative_improvement_side_by_side_v3.png" 
               alt="Lavender Gains" 
               style="width: 100%; vertical-align: middle;">
           <figcaption>
             <small>
-              <em>Lavender enhances the self-attention-only MiniCPM-Llama3-V-2.5 by up to 4% on 16/20 benchmarks.</em>
+              <em>Lavender enhances the self-attention-only MiniCPM-Llama3-V-2.5 by up to 4% on 16/20 benchmarks despite further fine-tuning on its pre-trained dataset..</em>
             </small>
           </figcaption>
         </figure>
@@ -399,19 +387,11 @@
             </figcaption>
             </figure>
 
-      <div class="content has-text-justified">
-        <p>
-          Among <em>Large SOTA Models</em>, Lavender demonstrates comparable performance to 
-          certain closed-source models at least an order of magnitude larger 
-          (e.g., <em>Claude-3.5 Sonnet, GPT-4o, and Gemini 1.5 Pro</em>) on certain tasks.
-        </p>
-      </div>
-
         <figure style="text-align: center;">
             <img src="static/images/bar_highlight.png" alt="Lavender Gains" style="max-width: 100%;">
             <figcaption>
                 <small>
-                <em>Lavender-Llama-3.2-11B demonstrates comparable performance to certain High-Resource State-of-the-Art Models.</em>
+                <em>Among Large SOTA Models, Lavender-Llama-3.2-11B demonstrates comparable performance to certain High-Resource State-of-the-Art Models at least an order of magnitude larger.</em>
                 </small>
             </figcaption>
             </figure>
@@ -420,9 +400,6 @@
         <p>
           We observe that aligning attention with diffusion models also helps reduce visual
           hallucinations, especially on tasks that require domain-specific knowledge. 
-          With minimal data (<strong>0.13M</strong> samples),
-          we boost performance significantly on out-of-distribution tasks like 
-          <em>WorldMedQA</em>, improving by <strong>68%</strong> relative to standard fine-tuning.
         </p>
       </div>
 
@@ -485,9 +462,11 @@
     <div class="container is-max-desktop content">
       <h2 class="title is-3">Acknowledgements</h2>
       <p>
-        We thank the creators of <a href="https://github.com/CompVis/stable-diffusion" target="_blank">Stable Diffusion</a> and 
-        related open-source diffusion projects for providing the foundation of cross-attention alignment used in Lavender.
-        We also appreciate the open-source community around <em>LLMs</em>, <em>VLMs</em>, and <em>PEFT</em> frameworks which 
+        We thank the creators of <a href="https://github.com/CompVis/stable-diffusion" target="_blank">Stable Diffusion</a>, 
+        <a href="https://github.com/meta-llama/llama-cookbook" target="_blank">Llama</a>, 
+        <a href="https://github.com/OpenBMB/MiniCPM-o" target="_blank">MiniCPM</a> and 
+        <a href="https://github.com/mlfoundations/open_flamingo" target="_blank">Open-Flamingo</a> for providing the foundation codes used in Lavender.
+        We also appreciate the open-source community around <em>PEFT</em> frameworks which 
         made this project feasible under constrained data and compute resources.
       </p>
       <p>
