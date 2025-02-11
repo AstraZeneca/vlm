@@ -277,7 +277,7 @@
                 <figcaption>
                   <small>
                     <em>Figure 3. <strong>Lavender: Diffusion Instruction Tuning.</strong>
-                      Lavender uses the text-vision attention maps of a Stable Diffusion Model, \(Attention_{SDM}\), as a guiding objective for the attention of the target vision-language model (VLM), \(Attention_{VLM}\). The \textit{Attention Alignment} module employs a 3-Layer ConvNet to transform \(Attention_{VLM}\) to match \(Attention_{SDM}\) via an MSE loss, acting as a regularisation term during supervised fine-tuning.</em>
+                      Lavender uses the text-vision attention maps of a Stable Diffusion Model, \(Attention_{SDM}\), as a guiding objective for the attention of the target vision-language model (VLM), \(Attention_{VLM}\). The Attention Alignment module employs a 3-Layer ConvNet to transform \(Attention_{VLM}\) to match \(Attention_{SDM}\) via an MSE loss, acting as a regularisation term during supervised fine-tuning.</em>
                   </small>
                 </figcaption>
               </figure>
@@ -343,6 +343,23 @@
           for <em>Lavender Llama-3.2</em>, where we see up to 50% gains over Small Budget-Constrained SOTA.
         </p>
       </div>
+        <figure style="text-align: center;">
+            <img src="static/images/plot_relative_improvement_over_sota_full.png" alt="Lavender Gains" style="max-width: 100%;">
+            <figcaption>
+                <small>
+                <em>Lavender improves MiniCPM-V-2.5 and Llama-3.2-11B, surpassing Small Budget-Constrained SOTA by up to 50% with minimal finetuning data (~0.13M).</em>
+                </small>
+            </figcaption>
+            </figure>
+
+        <figure style="text-align: center;">
+            <img src="static/images/bar_highlight.png" alt="Lavender Gains" style="max-width: 100%;">
+            <figcaption>
+                <small>
+                <em>Among Large SOTA Models, Lavender-Llama-3.2-11B demonstrates comparable performance to certain High-Resource State-of-the-Art Models at least an order of magnitude larger.</em>
+                </small>
+            </figcaption>
+            </figure>
 
         <!-- First Figure -->
           <figure style="
@@ -377,24 +394,6 @@
             </small>
           </figcaption>
         </figure>
-
-        <figure style="text-align: center;">
-            <img src="static/images/plot_relative_improvement_over_sota_full.png" alt="Lavender Gains" style="max-width: 100%;">
-            <figcaption>
-                <small>
-                <em>Lavender improves MiniCPM-V-2.5 and Llama-3.2-11B, surpassing Small Budget-Constrained SOTA by up to 50% with minimal finetuning data (~0.13M).</em>
-                </small>
-            </figcaption>
-            </figure>
-
-        <figure style="text-align: center;">
-            <img src="static/images/bar_highlight.png" alt="Lavender Gains" style="max-width: 100%;">
-            <figcaption>
-                <small>
-                <em>Among Large SOTA Models, Lavender-Llama-3.2-11B demonstrates comparable performance to certain High-Resource State-of-the-Art Models at least an order of magnitude larger.</em>
-                </small>
-            </figcaption>
-            </figure>
 
       <div class="content has-text-justified">
         <p>
