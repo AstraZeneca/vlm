@@ -38,6 +38,9 @@
   <img alt="Maturity level-0" src="https://img.shields.io/badge/Maturity%20Level-ML--0-red" style="vertical-align: middle;"/>
 </div>
 
+## News
+- [06/05] We open-sourced [minimal fine-tuning example](#fine-tuning-example) for Lavender-Llama-3.2 🚀🚀🚀.
+- [01/05] [Lavender: Diffusion Instruction Tuning](https://openreview.net/forum?id=DVW16DW1Cn) is accepted for a poster presentation at ICML 2025 🔥.
 
 ## 1. Introduction
 
@@ -141,6 +144,31 @@ output = lora_model.generate(**inputs, max_new_tokens=30)
 print(processor.decode(output[0]))
 
 ```
+
+
+## Fine-tuning Example
+
+This repository includes a minimal example for fine-tuning Llama-style models, located in the [`llama_finetune`](./llama_finetune/README.md) subfolder.
+
+### Overview of [`llama_finetune`](./llama_finetune/README.md)
+
+The `llama_finetune` directory contains:
+-   Source code adapted from `llama-recipes` for fine-tuning tasks, including specific modules for `datasets`, `diffag`, and `mllama`.
+-   Example scripts to run a fine-tuning process.
+-   A sample dataset to get you started.
+-   A `README.md` with detailed setup and usage instructions for the fine-tuning example.
+
+To get started with the fine-tuning example, please navigate to the `llama_finetune` directory and consult its `README.md` file for detailed instructions:
+
+```bash
+cd llama_finetune
+cat README.md
+```
+
+This example is designed to be self-contained and runnable with minimal setup, assuming you have the necessary dependencies and a suitable GPU environment.
+
+---
+
 ## 6. Evaluation Results
 
 **Lavender improves MiniCPM-V-2.5 and Llama-3.2-11B, surpassing Small Budget-Constrained SOTA by up to 50%.**
