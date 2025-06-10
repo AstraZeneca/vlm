@@ -39,6 +39,7 @@
 </div>
 
 ## News
+- [10/06] You can find data splits we used [here](./llama_finetune/data).
 - [06/05] We open-sourced [minimal fine-tuning example](#fine-tuning-example) for Lavender-Llama-3.2 🚀🚀🚀.
 - [01/05] [Lavender: Diffusion Instruction Tuning](https://openreview.net/forum?id=DVW16DW1Cn) is accepted for a poster presentation at ICML 2025 🔥.
 
