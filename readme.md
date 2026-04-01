@@ -39,9 +39,10 @@
 </div>
 
 ## News
-- [10/06] You can find data splits we used [here](./llama_finetune/data).
-- [06/05] We open-sourced [minimal fine-tuning example](#fine-tuning-example) for Lavender-Llama-3.2 🚀🚀🚀.
-- [01/05] [Lavender: Diffusion Instruction Tuning](https://openreview.net/forum?id=DVW16DW1Cn) is accepted for a poster presentation at ICML 2025 🔥.
+- [01/04/2026] We open-sourced the [attention map generation pipeline](./attention-map-generation) for extracting Stable Diffusion attention maps used in Lavender training.
+- [06/10/2025] You can find data splits we used [here](./llama_finetune/data).
+- [05/06/2025] We open-sourced [minimal fine-tuning example](#fine-tuning-example) for Lavender-Llama-3.2 🚀🚀🚀.
+- [05/01/2025] [Lavender: Diffusion Instruction Tuning](https://openreview.net/forum?id=DVW16DW1Cn) is accepted for a poster presentation at ICML 2025 🔥.
 
 ## 1. Introduction
 
